@@ -1,21 +1,30 @@
-def buildAndPushTag(Map args) {
-    def defaults = [
-        registryUrl: '***',
-        dockerfileDir: "./",
-        dockerfileName: "Dockerfile",
-        buildArgs: "",
-        pushLatest: true
-    ]
-    args = defaults + args
-    docker.withRegistry(args.registryUrl) {
-        def image = docker.build(args.image, "${args.buildArgs} ${args.dockerfileDir} -f ${args.dockerfileName}")
-        image.push(args.buildTag)
-        if(args.pushLatest) {
-            image.push("latest")
-            sh "docker rmi --force ${args.image}:latest"
+pipeline{
+    agent any
+    options{
+        buildDiscarder(logRotator(numToKeepStr: '5', daysToKeepStr: '5'))
+        timestamps()
+    }
+    environment{
+        
+        registry = "rikudinn/flask-app-image"
+        registryCredential = 'dockerhub_id'        
+    }
+    
+    stages{
+       stage('Building image') {
+      steps{
+        script {
+          dockerImage = docker.build registry + ":$BUILD_NUMBER"
         }
-        sh "docker rmi --force ${args.image}:${args.buildTag}"
- 
-        return "${args.image}:${args.buildTag}"
+      }
+    }
+       stage('Deploy Image') {
+      steps{
+         script {
+            docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
+          }
+        }
+      }
     }
 }
