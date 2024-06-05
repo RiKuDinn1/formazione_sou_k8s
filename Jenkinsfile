@@ -4,7 +4,7 @@ pipeline {
         //once you sign up for Docker hub, use that user_id here
         registry = "rikudinn/flask-image"
         //- update your credentials ID after creating credentials for connecting to Docker Hub
-        registryCredential = 'dockerhub_id'
+        registryCredential = 'dockerhub_id1'
         dockerImage = ''
     }
     
