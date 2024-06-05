@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Cloning Git') {
             steps {
-                checkout scmGit(branches: [[name: '*/main/app']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/RiKuDinn1/formazione_sou_k8s']])       
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/RiKuDinn1/formazione_sou_k8s']])       
             }
         }
     
