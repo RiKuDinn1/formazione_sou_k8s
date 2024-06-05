@@ -36,7 +36,7 @@ pipeline {
     }
     
      // Stopping Docker containers for cleaner Docker run
-     stage('docker stop container') {
+     stage('Docker Stop Container') {
          steps {
             sh 'docker ps -f name=flask-imageContainer -q | xargs --no-run-if-empty docker container stop'
             sh 'docker container ls -a -fname=flask-imageContainer -q | xargs -r docker container rm'
