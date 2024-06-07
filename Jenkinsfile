@@ -1,17 +1,16 @@
 pipeline {
   environment {
     imagename = "rikudinn/flask-image"
-    registryCredential = 'DockerHub'
+    registryCredential = 'dockerhub_id'
     dockerImage = ''
   }
   agent any
   stages {
     stage('Cloning Git') {
       steps {
-          checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/RiKuDinn1/formazione_sou_k8s']])       
-            }
+        git([url: 'https://github.com/RiKuDinn1/formazione_sou_k8s', branch: 'main', credentialsId: 'GitHub'])
  
-      
+      }
     }
     stage('Building image') {
       steps{
