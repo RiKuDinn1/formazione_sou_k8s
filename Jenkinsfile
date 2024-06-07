@@ -1,6 +1,6 @@
 pipeline {
   environment {
-    imagename = "rikudinn/flask-image"
+    imagename = "rikudinn/flask-app-example"
     registryCredential = 'dockerhub_id'
     dockerImage = ''
   }
